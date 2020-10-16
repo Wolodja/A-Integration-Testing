@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { TodosComponent } from './todos.component';
+import { from } from 'rxjs';
 
 
 describe('TodosComponent', () => {
@@ -24,10 +25,15 @@ describe('TodosComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TodosComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should load todos from the server ', () => {
+    let service = TestBed.inject(TodoService);
+    //fixture.debugElement.injector.get(TodoService);
+
+    spyOn(service, 'getTodos').and.returnValue(from([[1, 2, 3]]));
+
+    fixture.detectChanges();
+    expect(component.todos.length).toBe(3);
   });
 });
