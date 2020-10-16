@@ -23,8 +23,8 @@ describe('VoterComponent', () => {
 
     fixture.detectChanges();
 
-    let de = fixture.debugElement.query(By.css('.vote-count'));
-    let el : HTMLElement = de.nativeElement;
+    const de = fixture.debugElement.query(By.css('.vote-count'));
+    const el: HTMLElement = de.nativeElement;
 
     expect(el.innerText).toContain('21');
   });
@@ -34,9 +34,16 @@ describe('VoterComponent', () => {
     component.myVote = 1;
     fixture.detectChanges();
 
-    let de = fixture.debugElement.query(By.css('.glyphicon-menu-up'));
-    let el : HTMLElement = de.nativeElement;
+    const de = fixture.debugElement.query(By.css('.glyphicon-menu-up'));
+    const el: HTMLElement = de.nativeElement;
 
     expect(el.classList).toContain('highlighted');
+  });
+
+  it('should increas total votes when clicking upvote button', () => {
+    const button = fixture.debugElement.query(By.css('.glyphicon-menu-up'));
+    button.triggerEventHandler('click', null);
+
+    expect(component.totalVotes).toBe(1);
   });
 });
